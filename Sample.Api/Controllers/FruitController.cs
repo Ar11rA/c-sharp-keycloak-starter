@@ -7,7 +7,7 @@ using Sample.Api.Services.Interfaces;
 namespace Sample.Api.controllers;
 
 [ApiController]
-[Route("/api/[controller]")]
+[Route("/api/fruits")]
 public class FruitController
 {
     private readonly IFruitService _fruitService;
@@ -22,6 +22,13 @@ public class FruitController
     public async Task<List<Fruit>> Get(string? name)
     {
         return await _fruitService.GetFruits(name);
+    }
+    
+    
+    [HttpGet("group")]
+    public async Task<Dictionary<String, List<Fruit>>> GroupByName()
+    {
+        return await _fruitService.GroupFruits();
     }
 
     [Auth("Member", "Leader")]

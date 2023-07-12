@@ -7,4 +7,5 @@ public interface IFruitService
 {
     Task<List<Fruit>> GetFruits(string? name);
     Task<Fruit> CreateFruit(FruitRequest fruitRequest);
+    Task<Dictionary<string, List<Fruit>>> GroupFruits();
 }

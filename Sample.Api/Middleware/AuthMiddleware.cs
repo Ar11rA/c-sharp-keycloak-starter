@@ -25,12 +25,19 @@ public class AuthMiddleware
             return;
         }
 
-        AuthAttribute? attribute = feature.Endpoint!.Metadata
-            .GetMetadata<AuthAttribute>();
-        if (attribute != null)
+        Endpoint? endpoint = feature.Endpoint;
+        if (endpoint == null)
         {
+            await _next.Invoke(context);
+            return;
+        }
+        bool isAuthRequired = endpoint.Metadata.Any(f => f is AuthAttribute);
+        if (isAuthRequired)
+        {
+            AuthAttribute? attribute = feature.Endpoint!.Metadata
+                .GetMetadata<AuthAttribute>();
             _logger.LogInformation("Authentication required for route");
-            string[]? groups = attribute.Groups;
+            string[]? groups = attribute!.Groups;
             if (groups != null)
             {
                 _logger.LogInformation(groups.Length.ToString());
