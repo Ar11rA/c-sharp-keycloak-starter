@@ -31,6 +31,7 @@ public class AuthMiddleware
             await _next.Invoke(context);
             return;
         }
+
         bool isAuthRequired = endpoint.Metadata.Any(f => f is AuthAttribute);
         if (isAuthRequired)
         {

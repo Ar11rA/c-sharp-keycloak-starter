@@ -23,8 +23,8 @@ public class FruitController
     {
         return await _fruitService.GetFruits(name);
     }
-    
-    
+
+
     [HttpGet("group")]
     public async Task<Dictionary<String, List<Fruit>>> GroupByName()
     {

@@ -8,7 +8,7 @@ public class AuthAttribute : Attribute
     {
         Groups = groups;
     }
-    
+
     public AuthAttribute()
     {
     }

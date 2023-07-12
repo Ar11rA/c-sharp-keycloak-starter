@@ -48,28 +48,29 @@ public class FruitService : IFruitService
     public async Task<Dictionary<string, List<Fruit>>> GroupFruits()
     {
         List<Fruit> fruits = await _fruitRepository.GetFruits();
-        
+
         // Both approaches give the same output
         // Approach 1 - Reduce
-        Dictionary<string, List<Fruit>> fruitsGroupByName = fruits.Aggregate(new Dictionary<string, List<Fruit>>(), (acc, curr) =>
-        {
-            if (acc.ContainsKey(curr.Name))
+        Dictionary<string, List<Fruit>> fruitsGroupByName = fruits.Aggregate(new Dictionary<string, List<Fruit>>(),
+            (acc, curr) =>
             {
-                acc[curr.Name].Add(curr);
-            }
-            else
-            {
-                acc[curr.Name] = new List<Fruit> {curr};
-            }
+                if (acc.ContainsKey(curr.Name))
+                {
+                    acc[curr.Name].Add(curr);
+                }
+                else
+                {
+                    acc[curr.Name] = new List<Fruit> {curr};
+                }
 
-            return acc;
-        });
-        
+                return acc;
+            });
+
         // Approach 2 - Group By
         fruitsGroupByName = fruits
             .GroupBy(fruit => fruit.Name)
             .ToDictionary(dict => dict.Key, dict => dict.ToList());
-        
+
         return fruitsGroupByName;
     }
 }
