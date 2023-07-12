@@ -1,4 +1,3 @@
-using Sample.Api.DTO;
 using Sample.Api.Models;
 
 namespace Sample.Api.Repositories.Interfaces;

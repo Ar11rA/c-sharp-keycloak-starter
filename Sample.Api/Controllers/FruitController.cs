@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc;
 using Sample.Api.Config;
 using Sample.Api.DTO;
@@ -8,6 +9,7 @@ namespace Sample.Api.controllers;
 
 [ApiController]
 [Route("/api/fruits")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public class FruitController
 {
     private readonly IFruitService _fruitService;
@@ -26,7 +28,7 @@ public class FruitController
 
 
     [HttpGet("group")]
-    public async Task<Dictionary<String, List<Fruit>>> GroupByName()
+    public async Task<Dictionary<string, List<Fruit>>> GroupByName()
     {
         return await _fruitService.GroupFruits();
     }
