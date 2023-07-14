@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Sample.Api.Clients;
+using Sample.Api.Clients.Interfaces;
 using Sample.Api.Config;
 using Sample.Api.Repositories;
 using Sample.Api.Repositories.Interfaces;
@@ -13,7 +15,14 @@ public static class Registrar
     {
         services
             .AddScoped<IFruitService, FruitService>()
-            .AddScoped<IFruitRepository, FruitRepository>();
+            .AddScoped<IFruitRepository, FruitRepository>()
+            .AddScoped<IGeneratorService, GeneratorService>();
+        services
+            .AddTransient<RetryDelegateHandler>()
+            .AddHttpClient<IQuoteClient, QuoteClient>()
+            .AddHttpMessageHandler<RetryDelegateHandler>();
+        services
+            .AddHttpClient<IFactClient, FactClient>();
     }
 
     public static void RegisterDataServices(this IServiceCollection services,

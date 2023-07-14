@@ -1,4 +1,6 @@
 using AutoMapper;
+using Sample.Api.Clients;
+using Sample.Api.Clients.Interfaces;
 using Sample.Api.DTO;
 using Sample.Api.Exceptions;
 using Sample.Api.Models;
@@ -13,7 +15,10 @@ public class FruitService : IFruitService
     private readonly IMapper _mapper;
     private readonly ILogger<FruitService> _logger;
 
-    public FruitService(IFruitRepository fruitRepository, IMapper mapper, ILogger<FruitService> logger)
+    public FruitService(IFruitRepository fruitRepository, 
+        IMapper mapper, 
+        ILogger<FruitService> logger
+    )
     {
         _fruitRepository = fruitRepository;
         _mapper = mapper;
@@ -22,7 +27,6 @@ public class FruitService : IFruitService
 
     public async Task<List<Fruit>> GetFruits(string? name)
     {
-        _logger.LogInformation(name);
         if (name != null)
         {
             _logger.LogInformation("Returning fruits with name search");

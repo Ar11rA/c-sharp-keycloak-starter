@@ -9,7 +9,6 @@ namespace Sample.Api.controllers;
 
 [ApiController]
 [Route("/api/fruits")]
-[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public class FruitController
 {
     private readonly IFruitService _fruitService;
