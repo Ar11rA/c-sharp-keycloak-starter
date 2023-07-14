@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Sample.Api.Clients;
 using Sample.Api.Clients.Interfaces;
 using Sample.Api.Config;
+using Sample.Api.Handlers.Fruit;
 using Sample.Api.Repositories;
 using Sample.Api.Repositories.Interfaces;
 using Sample.Api.Services;
