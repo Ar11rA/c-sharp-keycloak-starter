@@ -1,6 +1,4 @@
 using AutoMapper;
-using Sample.Api.Clients;
-using Sample.Api.Clients.Interfaces;
 using Sample.Api.DTO;
 using Sample.Api.Exceptions;
 using Sample.Api.Models;
@@ -15,8 +13,8 @@ public class FruitService : IFruitService
     private readonly IMapper _mapper;
     private readonly ILogger<FruitService> _logger;
 
-    public FruitService(IFruitRepository fruitRepository, 
-        IMapper mapper, 
+    public FruitService(IFruitRepository fruitRepository,
+        IMapper mapper,
         ILogger<FruitService> logger
     )
     {

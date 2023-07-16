@@ -20,7 +20,7 @@ public class GeneratorController
     {
         return await _generatorService.GetQuote();
     }
-    
+
     [HttpGet("fact")]
     public async Task<string> GetFact()
     {

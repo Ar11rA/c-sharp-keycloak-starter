@@ -4,7 +4,7 @@ using Sample.Api.Exceptions;
 namespace Sample.Api.Clients;
 
 public class FactClient : IFactClient
-{ 
+{
     private readonly HttpClient _httpClient;
 
     public FactClient(HttpClient httpClient)
@@ -20,6 +20,7 @@ public class FactClient : IFactClient
         {
             throw new HttpException(503, "Service Unavailable");
         }
+
         string response = await result.Content.ReadAsStringAsync();
         return response;
     }
