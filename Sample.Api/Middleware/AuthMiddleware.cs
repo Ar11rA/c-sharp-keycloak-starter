@@ -20,21 +20,22 @@ public class AuthMiddleware
         _authClient = authClient;
     }
 
-    private async Task<bool> ValidateBearerAuth(HttpContext context, string[]? groups)
+    private async Task<(bool, bool)> ValidateBearerAuth(HttpContext context, string[]? groups)
     {
         IHeaderDictionary headers = context.Request.Headers;
         StringValues auth = headers.Authorization;
         if (auth.IsNullOrEmpty())
         {
-            _logger.LogError("No auth header");
-            return false;
+            _logger.LogError("Authentication Failed: No auth header");
+            return (false, false);
         }
 
         string authStr = auth.ToString();
         if (!authStr.StartsWith("Bearer"))
         {
-            _logger.LogError("Unsupported auth scheme");
-            return false;
+            _logger.LogError("Authentication Failed: Unsupported auth scheme");
+            context.Response.StatusCode = 401;
+            return (false, false);
         }
 
         string token = authStr.Split(" ")[1];
@@ -42,20 +43,21 @@ public class AuthMiddleware
         TokenValidationResponse tokenValidationResponse = await _authClient.Introspect(tokenRequest);
         if (!tokenValidationResponse.IsActive)
         {
-            _logger.LogError("Token expired");
-            return false;
+            _logger.LogError("Authentication Failed: Token expired");
+            context.Response.StatusCode = 401;
+            return (false, false);
         }
 
         HashSet<string> assignedGroups = tokenValidationResponse.Groups.ToHashSet();
         bool isAuthorized = groups?.Any(group => assignedGroups.Contains(group)) ?? tokenValidationResponse.IsActive;
         if (!isAuthorized)
         {
-            _logger.LogError("Role not matched");
+            _logger.LogError("Authentication Failed: Role not matched");
+            return (true, false);
         }
-
-        return isAuthorized;
+        return (true, true);
     }
-
+    
     public async Task InvokeAsync(HttpContext context)
     {
         // Check if the request is annotated with the [Authorize] attribute
@@ -84,13 +86,19 @@ public class AuthMiddleware
             .GetMetadata<AuthAttribute>();
         _logger.LogInformation("Authentication required for route");
         string[]? groups = attribute!.Groups;
-        bool isAuthenticated = await ValidateBearerAuth(context, groups);
+        (bool isAuthenticated, bool isAuthorized) = await ValidateBearerAuth(context, groups);
         if (!isAuthenticated)
         {
             context.Response.StatusCode = 401;
             return;
         }
-
+        
+        if (!isAuthorized)
+        {
+            context.Response.StatusCode = 403;
+            return;
+        }
+        
         _logger.LogInformation("Keycloak authentication passed!");
 
         await _next.Invoke(context);
