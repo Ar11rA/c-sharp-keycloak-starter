@@ -3,7 +3,7 @@ namespace Sample.Api.Config;
 public class RetryDelegateHandler : DelegatingHandler
 {
     private const int MaxRetries = 3;
-    private readonly ILogger<RetryDelegateHandler> _logger; 
+    private readonly ILogger<RetryDelegateHandler> _logger;
     private int _backOff;
 
     public RetryDelegateHandler(ILogger<RetryDelegateHandler> logger, IConfiguration configuration)
@@ -21,9 +21,11 @@ public class RetryDelegateHandler : DelegatingHandler
         {
             _logger.LogInformation("here with retry: " + i);
             response = await base.SendAsync(request, cancellationToken);
-            if (response.IsSuccessStatusCode) {
+            if (response.IsSuccessStatusCode)
+            {
                 return response;
             }
+
             _logger.LogInformation("Delay of: " + _backOff);
             await Task.Delay(_backOff);
             _backOff *= 2;

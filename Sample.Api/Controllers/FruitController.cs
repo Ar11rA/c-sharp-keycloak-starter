@@ -18,7 +18,7 @@ public class FruitController
         _fruitService = fruitService;
     }
 
-    [Auth]
+    [Auth("member")]
     [HttpGet]
     public async Task<List<Fruit>> Get(string? name)
     {
@@ -26,13 +26,14 @@ public class FruitController
     }
 
 
+    [Auth("leader")]
     [HttpGet("group")]
     public async Task<Dictionary<string, List<Fruit>>> GroupByName()
     {
         return await _fruitService.GroupFruits();
     }
 
-    [Auth("Member", "Leader")]
+    [Auth]
     [HttpPost]
     public async Task<Fruit> Create(FruitRequest fruitRequest)
     {

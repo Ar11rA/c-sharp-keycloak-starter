@@ -15,8 +15,8 @@ public class FruitService : IFruitService
     private readonly IMapper _mapper;
     private readonly ILogger<FruitService> _logger;
 
-    public FruitService(IFruitRepository fruitRepository, 
-        IMapper mapper, 
+    public FruitService(IFruitRepository fruitRepository,
+        IMapper mapper,
         ILogger<FruitService> logger
     )
     {

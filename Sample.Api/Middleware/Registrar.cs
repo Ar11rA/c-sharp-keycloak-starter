@@ -23,6 +23,8 @@ public static class Registrar
             .AddHttpMessageHandler<RetryDelegateHandler>();
         services
             .AddHttpClient<IFactClient, FactClient>();
+        services
+            .AddHttpClient<IAuthClient, AuthClient>();
     }
 
     public static void RegisterDataServices(this IServiceCollection services,

@@ -8,7 +8,7 @@ namespace Sample.Api.Clients;
 public class QuoteClient : IQuoteClient
 {
     private readonly HttpClient _httpClient;
-    
+
 
     public QuoteClient(HttpClient httpClient)
     {
@@ -23,12 +23,14 @@ public class QuoteClient : IQuoteClient
         {
             throw new HttpException(503, "Service Unavailable");
         }
+
         string response = await result.Content.ReadAsStringAsync();
         QuoteResponse? quoteResponse = JsonSerializer.Deserialize<QuoteResponse>(response);
         if (quoteResponse == null)
         {
             throw new HttpException(500, "Json conversion failed");
         }
+
         return quoteResponse;
     }
 }
