@@ -16,3 +16,9 @@
 4. Authentication and Authorization using Oauth2 with Keycloak
 5. HttpClient setup
 6. C# language basics and advanced
+
+
+## Branches with custom implementations
+
+1. `pattern/mediator`: Mediator pattern in C# Asp.net API using MediatR
+2. `feat/keycloak`: Implementation of OAuth2 keycloak authentication using middleware
