@@ -6,10 +6,10 @@ services:
       context: .
     environment:
       DbContext: "Server=pg,5432;User Id=dev_admin;Password=secret;Database=my_database"
-      KeycloakClientId: "dev"
+      KeycloakClientId: "dev-client"
       KeycloakClientUrl: "http://keycloak:8080"
-      KeycloakClientSecret: "ZRgv4Zh3ARIMFWjpRo8cLigx4i8Jf1tZ"
-      KeycloakRealm: "master"
+      KeycloakClientSecret: "bbqX2RbP9XsxZMOKuWEhhEgKirMVcsOR"
+      KeycloakRealm: "demo"
     ports:
       - "5001:5001"
     depends_on: 
@@ -22,15 +22,19 @@ services:
       POSTGRES_USER: "dev_admin"
       POSTGRES_DB: "my_database"
     ports:
-      - "5432:5432"
+      - "5433:5432"
   
   keycloak:
     image: quay.io/keycloak/keycloak:22.0.0
+    entrypoint: ["/bin/sh", "-c"]
     command:
-      - start-dev
+      - "/opt/keycloak/bin/kc.sh import --file /opt/jboss/keycloak/imports/realm-export.json && /opt/keycloak/bin/kc.sh start-dev"
+    volumes:
+      - "./Properties/:/opt/jboss/keycloak/imports/"
     environment:
+      KEYCLOAK_IMPORT: "/opt/jboss/keycloak/imports/realm-export.json"
       KEYCLOAK_ADMIN: "admin" 
       KEYCLOAK_ADMIN_PASSWORD: "admin"
     ports:
-      - "8080:8080"
+      - "8081:8080"
     
