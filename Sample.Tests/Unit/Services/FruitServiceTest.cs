@@ -33,12 +33,36 @@ public class FruitServiceTest
     {
         _fruitRepository.Setup(f => f.GetFruits()).ReturnsAsync(new List<Fruit>
         {
-            new() {Id = 1},
-            new() {Id = 2}
+            new() { Id = 1 },
+            new() { Id = 2 }
         });
         List<Fruit> fruits = await _fruitService.GetFruits(null);
         Assert.Equal(2, fruits.Count);
         Assert.Equal(1, fruits[0].Id);
         Assert.Equal(2, fruits[1].Id);
+    }
+
+    [Fact]
+    public async Task TestGetFruitsByName()
+    {
+        // Arrange
+        var fruitList = new List<Fruit>
+        {
+            new()
+            {
+                Id = 1,
+                Name = "Apple",
+                Description = "Apple",
+                Class = "Apple"
+            }
+        };
+        _fruitRepository.Setup(u => u.GetFruitsByName("Apple")).ReturnsAsync(fruitList);
+
+        // Act
+        var result = await _fruitService.GetFruits("Apple");
+
+        // Assert
+        Assert.NotEmpty(result);
+        Assert.Equal("Apple", result[0].Name);
     }
 }
