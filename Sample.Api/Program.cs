@@ -19,3 +19,5 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseMiddleware<HttpLoggingMiddleware>();
 
 app.Run();
+
+public partial class Program { }
