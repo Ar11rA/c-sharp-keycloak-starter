@@ -74,3 +74,8 @@ _[Ss]cripts
 *.ncrunchsolution
 *.dot[Cc]over
 .idea
+.vs?
+.vscode?
+.vs/sample-api/xs/UserPrefs.xml
+.vs/sample-api/xs/project-cache/Sample.Api-Debug.json
+.vs/sample-api/xs/project-cache/Sample.Tests-Debug.json

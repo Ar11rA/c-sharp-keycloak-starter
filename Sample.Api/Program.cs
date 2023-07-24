@@ -19,3 +19,6 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseMiddleware<HttpLoggingMiddleware>();
 
 app.Run();
+
+// Integration Tests hook
+public partial class Program { }
