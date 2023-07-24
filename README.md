@@ -137,7 +137,27 @@ info: Microsoft.EntityFrameworkCore.Migrations[20405]
 
 ### Unit testing
 
+Use dotnet CLI to run tests for web api
+  - To run all test
+    ```shell
+    dotnet test # Run unit & integration tests
+    ``` 
+  - To run specific test
+    ```shell
+    dotnet test --filter <ClassName> # Run all tests in specified class
+    dotnet test --filter <ClassName.MethodName> # Run a test with the specified full name
+    ```
+
 ### Integration testing with docker-compose
+
+We use 1 command to run test in docker environment using `docker-compose`
+
+Run:
+
+```shell
+docker compose -f docker-compose.test.yaml up --exit-code-from test --build
+```
+- `--exit-code-from` Stops all containers when got exit code from `test` service
 
 ## Branches with custom tutorials
 
