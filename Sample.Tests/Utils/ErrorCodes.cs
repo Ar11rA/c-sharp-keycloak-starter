@@ -1,11 +1,9 @@
-using System;
-using Sample.Api.DTO;
+using Sample.Tests.Utils.DTO;
 
-namespace Sample.Api.Config
+namespace Sample.Tests.Utils
 {
     public static class ErrorCodes
     {
         public static readonly Error UnreadableResponse = new(nameof(UnreadableResponse), "Unreadable response.");
     }
 }
-

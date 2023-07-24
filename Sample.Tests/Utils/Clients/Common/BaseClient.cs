@@ -1,10 +1,8 @@
-using System;
-using Sample.Api.DTO;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Sample.Api.Clients
+namespace Sample.Tests.Utils.Clients.Common
 {
     public abstract class BaseClient
     {
@@ -17,7 +15,8 @@ namespace Sample.Api.Clients
         protected HttpClient Client { get; }
 
         //JSON Serializer Configuration for the Payload content
-        private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions {
+        private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions
+        {
             Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
@@ -31,15 +30,15 @@ namespace Sample.Api.Clients
         //Invocation for each of the HTTP Methods
 
         protected async Task<ClientResponse<T>> GetAsync<T>(string relativeUrl)
-          where T : class
+            where T : class
         {
             var response = await Client.GetAsync(FormatFullApiUrl(relativeUrl));
             return new ClientResponse<T>(response);
         }
 
         protected async Task<ClientResponse<TOut>> PostAsync<TIn, TOut>(string relativeUrl, TIn item)
-          where TOut : class
-          where TIn : notnull
+            where TOut : class
+            where TIn : notnull
         {
             var response = await Client.PostAsync(FormatFullApiUrl(relativeUrl), GetHttpContent(item));
             return new ClientResponse<TOut>(response);
@@ -48,22 +47,22 @@ namespace Sample.Api.Clients
         //PUT operation for Null and Non-Null Body Types
 
         protected async Task<ClientResponse<TOut>> PutAsync<TIn, TOut>(string relativeUrl, TIn item)
-          where TOut : class
-          where TIn : notnull
+            where TOut : class
+            where TIn : notnull
         {
             var response = await Client.PutAsync(FormatFullApiUrl(relativeUrl), GetHttpContent(item));
             return new ClientResponse<TOut>(response);
         }
 
         protected async Task<ClientResponse<T>> PutAsync<T>(string relativeUrl)
-          where T : class
+            where T : class
         {
             var response = await Client.PutAsync(FormatFullApiUrl(relativeUrl), null);
             return new ClientResponse<T>(response);
         }
 
         protected async Task<ClientResponse<T>> DeleteAsync<T>(string relativeUrl)
-          where T : class
+            where T : class
         {
             var response = await Client.DeleteAsync(FormatFullApiUrl(relativeUrl));
             return new ClientResponse<T>(response);

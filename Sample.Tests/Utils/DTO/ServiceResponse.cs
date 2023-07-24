@@ -1,14 +1,12 @@
-using System;
-
-namespace Sample.Api.DTO
+namespace Sample.Tests.Utils.DTO
 {
-    public class ServiceResponse
+    public class ServiceErrorResponse
     {
         public Error? Error { get; set; }
     }
 
-    public class ServiceResponse<T> : ServiceResponse
-      where T : class
+    public sealed class ServiceResponse<T> : ServiceErrorResponse
+        where T : class
     {
         public T? Data { get; set; }
 
@@ -21,7 +19,5 @@ namespace Sample.Api.DTO
             Data = data; //Current Class Member
             Error = error; //Base Class Member
         }
-
     }
 }
-

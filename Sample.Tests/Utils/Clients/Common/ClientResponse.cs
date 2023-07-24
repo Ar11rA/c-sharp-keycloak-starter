@@ -1,15 +1,13 @@
-using System;
-using Sample.Api.Config;
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Sample.Tests.Utils.DTO;
 
-namespace Sample.Api.DTO
+namespace Sample.Tests.Utils.Clients.Common
 {
     public class ClientResponse<T>
-  where T : class
+        where T : class
     {
-
         public HttpStatusCode StatusCode { get; }
 
         public bool Successful { get; }
@@ -22,7 +20,8 @@ namespace Sample.Api.DTO
         private readonly Lazy<ServiceResponse<T>> _content;
 
         //Configuring JsonSerializer for the Response Content
-        private static readonly JsonSerializerOptions Settings = new() {
+        private static readonly JsonSerializerOptions Settings = new()
+        {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
@@ -49,8 +48,8 @@ namespace Sample.Api.DTO
         {
             StatusCode = response.StatusCode;
             Successful = response.IsSuccessStatusCode
-              || response.StatusCode == HttpStatusCode.SeeOther
-              || response.StatusCode == HttpStatusCode.NotModified;
+                         || response.StatusCode == HttpStatusCode.SeeOther
+                         || response.StatusCode == HttpStatusCode.NotModified;
 
             using (response.Content)
             {
@@ -73,8 +72,8 @@ namespace Sample.Api.DTO
             try
             {
                 result = string.IsNullOrEmpty(content)
-                  ? new ServiceResponse<T>()
-                  : JsonSerializer.Deserialize<ServiceResponse<T>>(content, Settings);
+                    ? new ServiceResponse<T>()
+                    : JsonSerializer.Deserialize<ServiceResponse<T>>(content, Settings);
                 return true;
             }
             catch (Exception)
@@ -85,4 +84,3 @@ namespace Sample.Api.DTO
         }
     }
 }
-

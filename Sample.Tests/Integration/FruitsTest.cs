@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using Xunit.Abstractions;
-using Sample.Api.Clients;
 using Sample.Api.DTO;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Sample.Tests.Utils.Clients;
 
 namespace Sample.Tests.Integration
 {
@@ -30,6 +30,15 @@ namespace Sample.Tests.Integration
         [Fact]
         public async Task GetFruitByName_NameAsApple_Success()
         {
+            // creating fruit before get request
+            FruitRequest fruitRequest = new FruitRequest()
+            {
+                Name = "Apple",
+                Description = "Washington Apples",
+                Class = "Medium"
+            };
+            await _client.CreateFruitAsync(fruitRequest);
+            
             var response = await _client.GetFruitsAsync("Apple");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }

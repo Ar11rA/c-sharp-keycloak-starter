@@ -1,5 +1,4 @@
-using System;
-namespace Sample.Api.DTO
+namespace Sample.Tests.Utils.DTO
 {
     public sealed class Error
     {
@@ -18,4 +17,3 @@ namespace Sample.Api.DTO
         public List<Error> Details { get; set; } = new();
     }
 }
-
