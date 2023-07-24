@@ -1,14 +1,10 @@
 namespace Sample.Tests.Utils.DTO
 {
-    public class ServiceErrorResponse
-    {
-        public Error? Error { get; set; }
-    }
-
-    public sealed class ServiceResponse<T> : ServiceErrorResponse
+    public sealed class ServiceResponse<T>
         where T : class
     {
         public T? Data { get; set; }
+        public Error? Error { get; set; }
 
         public ServiceResponse()
         {
@@ -17,7 +13,7 @@ namespace Sample.Tests.Utils.DTO
         public ServiceResponse(T data, Error? error = null)
         {
             Data = data; //Current Class Member
-            Error = error; //Base Class Member
+            Error = error;
         }
     }
 }

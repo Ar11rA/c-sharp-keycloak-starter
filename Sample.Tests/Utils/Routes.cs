@@ -1,5 +1,4 @@
-using System;
-namespace Sample.Api.Middleware
+namespace Sample.Tests.Utils
 {
     public static class Routes
     {

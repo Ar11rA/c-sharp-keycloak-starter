@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.WebUtilities;
 using Sample.Api.DTO;
-using Sample.Api.Middleware;
 using Sample.Api.Models;
 using Sample.Tests.Utils.Clients.Common;
 
@@ -12,12 +11,12 @@ namespace Sample.Tests.Utils.Clients
         {
         }
 
-        public Task<ClientResponse<Fruit>> GetFruitsAsync(string? fruitName)
+        public Task<ClientResponse<List<Fruit>>> GetFruitsAsync(string? fruitName)
         {
             var parameters = new Dictionary<string, string?>();
             parameters.Add("name", fruitName);
             var queryPath = QueryHelpers.AddQueryString(Routes.Fruits, parameters);
-            return GetAsync<Fruit>(queryPath);
+            return GetAsync<List<Fruit>>(queryPath);
         }
 
         public Task<ClientResponse<Fruit>> CreateFruitAsync(FruitRequest fruitRequest)
